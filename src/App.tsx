@@ -22,7 +22,6 @@ function App() {
         {todos.map((todo: ToDo) => (
           <p key={todo.title}>{todo.title}</p>
         ))}
-        
       </header>
     </div>
   )
