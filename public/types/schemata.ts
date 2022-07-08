@@ -1,4 +1,4 @@
-// For now, User will refer to all data in localstorage. 
+// For now, User will refer to all data in localstorage.
 // Once I back this with a DB we can evolve this
 export interface User {
   todos: ToDo[]
