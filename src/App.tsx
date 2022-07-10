@@ -1,10 +1,12 @@
+import './App.css'
+
 import axios from 'axios'
 import { Form, Formik } from 'formik'
 import React from 'react'
-import './App.css'
+import { styled } from 'styled-components'
+
 import logo from './logo.svg'
 import { ToDo } from './types/schemata'
-import { styled } from 'styled-components'
 
 function App() {
   //maintain state
