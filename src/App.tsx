@@ -1,30 +1,53 @@
 import './App.css'
 
-import { useState } from 'react'
-
-import { useTodos } from './hooks/useTodos'
+// import { useTodos } from './hooks/useTodos'
 import logo from './logo.svg'
 import { ToDo } from './types/schemata'
 
 function App() {
-  const [count, setCount] = useState(0)
-  const todos = useTodos()
-
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <div className="body">
-          <button onClick={() => setCount((count) => count + 1)}>
-            🪂 Click me : {count}
-          </button>
+          <button onClick={() => createTodo(myTodo)}>🪂 Create Todo</button>
+          <button onClick={() => helloWorld()}>🪂 Sanity Check</button>
         </div>
-        {todos.map((todo: ToDo) => (
-          <p key={todo.title}>{todo.title}</p>
-        ))}
       </header>
     </div>
   )
+}
+
+function createTodo(data: ToDo) {
+  return fetch('/.netlify/functions/todo-crud', {
+    body: JSON.stringify(data),
+    method: 'POST',
+  })
+    .then((response) => {
+      return response.json()
+    })
+    .catch((reason) => {
+      console.log(reason)
+    })
+}
+
+function helloWorld() {
+  return fetch('/.netlify/functions/hello-world')
+    .then((response) => response.json())
+    .then((data) => console.log(data))
+    .catch((reason) => {
+      console.log(reason)
+    })
+}
+
+// Todo data
+const myTodo: ToDo = {
+  title: 'dummy todo',
+  description: 'a todo for testing',
+  deadline: '2022-12-25',
+  status: 'Not Started',
+  importance: 10,
+  urgency: 0,
 }
 
 export default App
