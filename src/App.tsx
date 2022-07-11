@@ -1,7 +1,7 @@
 import './App.css'
 
 import axios from 'axios'
-import { Form, Formik } from 'formik'
+import { Field, Form, Formik } from 'formik'
 import React from 'react'
 
 import logo from './logo.svg'
@@ -58,34 +58,43 @@ function App() {
         </div>
         <Formik
           initialValues={todoCreateInitialValues}
-          onSubmit={(values, actions) => {
+          onSubmit={(values) => {
             console.log(values)
-            // createTodo(values)
+            createTodo(values)
+            setTodos((todos) => [...todos, values])
           }}
         >
           {(props) => (
             <Form onSubmit={props.handleSubmit}>
-              <input
+              <label htmlFor="name">Title</label>
+              <Field
                 type="text"
                 onChange={props.handleChange}
                 onBlur={props.handleBlur}
                 value={props.values.title}
                 name="title"
               />
-              <input
+              <label htmlFor="description">Description</label>
+              <Field
                 type="text"
                 onChange={props.handleChange}
                 onBlur={props.handleBlur}
                 value={props.values.description}
                 name="description"
               />
-              <input
-                type="text"
-                onChange={props.handleChange}
-                onBlur={props.handleBlur}
-                value={props.values.urgency}
-                name="name"
-              />
+              <Field name="status" as="select">
+                <option value="Not Started">Not Started</option>
+                <option value="In Progress">In Progress</option>
+                <option value="Done">Done</option>
+              </Field>
+              <Field name="urgency" as="select">
+                <option value="0">Not Urgent</option>
+                <option value="10">Urgent</option>
+              </Field>
+              <Field name="importance" as="select">
+                <option value="0">Not Important</option>
+                <option value="10">Important</option>
+              </Field>
               <button type="submit">Submit</button>
             </Form>
           )}
@@ -103,11 +112,6 @@ const todoCreateInitialValues: ToDo = {
   deadline: undefined,
   status: 'Not Started',
 }
-
-// const TodoGrid = styled.div`
-//   display: 'grid';
-//   min-width: '500px';
-// `
 
 function createTodo(data: ToDo) {
   return fetch('/.netlify/functions/todo-crud', {
@@ -132,25 +136,6 @@ function showAllTodos(setState) {
 
     setState(formattedTodos)
   })
-}
-
-function helloWorld() {
-  return fetch('/.netlify/functions/hello-world')
-    .then((response) => response.json())
-    .then((data) => console.log(data))
-    .catch((reason) => {
-      console.log(reason)
-    })
-}
-
-// Todo data
-const myTodo: ToDo = {
-  title: 'dummy todo',
-  description: 'a todo for testing',
-  deadline: '2022-12-25',
-  status: 'Not Started',
-  importance: 10,
-  urgency: 0,
 }
 
 export default App
