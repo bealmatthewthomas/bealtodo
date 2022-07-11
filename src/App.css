@@ -16,7 +16,7 @@
 
 .todo-grid {
   display: grid;
-  grid-template-columns: auto auto;
+  grid-template-columns: 1fr 1fr;
   border-color: black;
   border-width: 1px;
   border-style: solid;
