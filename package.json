@@ -43,5 +43,8 @@
     "vite": "^2.9.12"
   },
   "pre-commit": "lint",
-  "license": "MIT"
+  "license": "MIT",
+  "resolutions": {
+    "styled-components": "^5"
+  }
 }

@@ -3,7 +3,6 @@ import './App.css'
 import axios from 'axios'
 import { Form, Formik } from 'formik'
 import React from 'react'
-import { styled } from 'styled-components'
 
 import logo from './logo.svg'
 import { ToDo } from './types/schemata'
@@ -15,64 +14,48 @@ function App() {
     showAllTodos(setTodos)
   }, [])
 
-  const todoCreateInitialValues: ToDo = {
-    title: '',
-    description: '',
-    urgency: 0,
-    importance: 0,
-    deadline: undefined,
-    status: 'Not Started',
-  }
+  const q1Todos = todos.filter((todo) => {
+    return todo.importance > 5 && todo.urgency > 5
+  })
+
+  const q2Todos = todos.filter((todo) => {
+    return todo.importance > 5 && todo.urgency < 5
+  })
+
+  const q3Todos = todos.filter((todo) => {
+    return todo.importance < 5 && todo.urgency > 5
+  })
+
+  const q4Todos = todos.filter((todo) => {
+    return todo.importance < 5 && todo.urgency < 5
+  })
 
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <div className="body">
-          <button onClick={() => createTodo(myTodo)}>🪂 Create Todo</button>
-          <button onClick={() => helloWorld()}>🪂 Sanity Check</button>
+        <div className="todo-grid">
+          <div className="todo-cell">
+            {q1Todos.map((todo, idx) => (
+              <p key={idx}>{todo.title}</p>
+            ))}
+          </div>
+          <div className="todo-cell">
+            {q2Todos.map((todo, idx) => (
+              <p key={idx}>{todo.title}</p>
+            ))}
+          </div>
+          <div className="todo-cell">
+            {q3Todos.map((todo, idx) => (
+              <p key={idx}>{todo.title}</p>
+            ))}
+          </div>
+          <div className="todo-cell">
+            {q4Todos.map((todo, idx) => (
+              <p key={idx}>{todo.title}</p>
+            ))}
+          </div>
         </div>
-        <div className="todoGrid"></div>
-        <ul>
-          {todos.map((todo, idx) => (
-            <li key={idx}>{todo.title}</li>
-          ))}
-        </ul>
-        {/* <Formik
-          initialValues={todoCreateInitialValues}
-          onSubmit={(values, actions) => {
-            console.log(values)
-            // createTodo(values)
-          }}
-        >
-          {(props) => (
-            <form onSubmit={props.handleSubmit}>
-              <input
-                type="text"
-                onChange={props.handleChange}
-                onBlur={props.handleBlur}
-                value={props.values.title}
-                name="title"
-              />
-              <input
-                type="text"
-                onChange={props.handleChange}
-                onBlur={props.handleBlur}
-                value={props.values.description}
-                name="description"
-              />
-              <input
-                type="text"
-                onChange={props.handleChange}
-                onBlur={props.handleBlur}
-                value={props.values.urgency}
-                name="name"
-              />
-              {props.errors && <div id="feedback">{props.errors}</div>}
-              <button type="submit">Submit</button>
-            </form>
-          )}
-        </Formik> */}
         <Formik
           initialValues={todoCreateInitialValues}
           onSubmit={(values, actions) => {
@@ -112,10 +95,19 @@ function App() {
   )
 }
 
-const TodoGrid = styled.div`
-  display: 'grid';
-  min-width: '500px';
-`
+const todoCreateInitialValues: ToDo = {
+  title: '',
+  description: '',
+  urgency: 0,
+  importance: 0,
+  deadline: undefined,
+  status: 'Not Started',
+}
+
+// const TodoGrid = styled.div`
+//   display: 'grid';
+//   min-width: '500px';
+// `
 
 function createTodo(data: ToDo) {
   return fetch('/.netlify/functions/todo-crud', {

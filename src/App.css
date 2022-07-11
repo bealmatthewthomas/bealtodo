@@ -14,6 +14,22 @@
   pointer-events: none;
 }
 
+.todo-grid {
+  display: grid;
+  grid-template-columns: auto auto;
+  border-color: black;
+  border-width: 1px;
+  border-style: solid;
+  min-width: 500px;
+  min-height: 500px;
+}
+
+.todo-cell {
+  border-color: black;
+  border-width: 1px;
+  border-style: solid;
+}
+
 p {
   margin: 20px 0px;
 }
